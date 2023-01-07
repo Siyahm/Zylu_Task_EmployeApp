@@ -1,5 +1,4 @@
 import 'package:employee_app/helpers/app_colors.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 
 class TextFormFieldWidget extends StatelessWidget {
@@ -7,17 +6,21 @@ class TextFormFieldWidget extends StatelessWidget {
     Key? key,
     required this.label,
     required this.controller,
+    this.onTap,
   }) : super(key: key);
   final String label;
   final TextEditingController controller;
+  final void Function()? onTap;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      onTap: onTap,
+      controller: controller,
       decoration: InputDecoration(
         filled: true,
-        label: const Text(
-          'Full Name',
-          style: TextStyle(
+        label: Text(
+          label,
+          style: const TextStyle(
             color: AppColors.greyColor,
           ),
         ),

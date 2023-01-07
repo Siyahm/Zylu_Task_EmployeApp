@@ -8,6 +8,7 @@ class EmployeeDB {
     try {
       final employeeDb = await Hive.openBox<EmployeeModel>('EMPLOYEE_DB');
       await employeeDb.add(model);
+      log(employeeDb.toString());
       return true;
     } catch (e) {
       log(e.toString());

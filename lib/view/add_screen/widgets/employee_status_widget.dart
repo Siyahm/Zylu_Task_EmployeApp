@@ -1,5 +1,5 @@
 import 'package:employee_app/controller/add_screen_controller.dart';
-import 'package:flutter/cupertino.dart';
+import 'package:employee_app/model/emplotee_model.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -10,35 +10,35 @@ class EmployeeStatusWidget extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final addScreenController =
-        Provider.of<AddScreenController>(context, listen: false);
-    return Row(
-      children: [
-        Expanded(
-          child: ListTile(
-            leading: Radio(
-              value: Status.active,
-              groupValue: addScreenController.status,
-              onChanged: (newValue) {
-                addScreenController.changeRadioValue(newValue!);
-              },
+    return Consumer<AddScreenController>(
+      builder: (context, value, child) => Row(
+        children: [
+          Expanded(
+            child: ListTile(
+              leading: Radio(
+                value: Status.active,
+                groupValue: value.status,
+                onChanged: (newValue) {
+                  value.changeRadioValue(newValue!);
+                },
+              ),
+              title: const Text('Active'),
             ),
-            title: const Text('Active'),
           ),
-        ),
-        Expanded(
-          child: ListTile(
-            leading: Radio(
-              value: Status.inactive,
-              groupValue: addScreenController.status,
-              onChanged: (newValue) {
-                addScreenController.changeRadioValue(newValue!);
-              },
+          Expanded(
+            child: ListTile(
+              leading: Radio(
+                value: Status.inactive,
+                groupValue: value.status,
+                onChanged: (newValue) {
+                  value.changeRadioValue(newValue!);
+                },
+              ),
+              title: const Text('Inactive'),
             ),
-            title: const Text('Inactive'),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

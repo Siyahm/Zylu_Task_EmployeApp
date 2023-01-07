@@ -7,9 +7,20 @@ class EmployeeModel {
   final String? name;
   @HiveField(1)
   final DateTime date;
+  @HiveField(2)
+  final Status? status;
 
   EmployeeModel({
     required this.name,
     required this.date,
+    required this.status,
   });
+}
+
+@HiveType(typeId: 2)
+enum Status {
+  @HiveField(0)
+  active,
+  @HiveField(1)
+  inactive,
 }

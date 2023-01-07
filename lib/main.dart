@@ -12,6 +12,9 @@ Future<void> main() async {
   if (!Hive.isAdapterRegistered(EmployeeModelAdapter().typeId)) {
     Hive.registerAdapter(EmployeeModelAdapter());
   }
+  if (!Hive.isAdapterRegistered(StatusAdapter().typeId)) {
+    Hive.registerAdapter(StatusAdapter());
+  }
   runApp(const MyApp());
 }
 
