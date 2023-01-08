@@ -44,12 +44,14 @@ class AddScreenController with ChangeNotifier {
   }
 
   void addEmployee(BuildContext context) async {
+    final String id = DateTime.now().millisecondsSinceEpoch.toString();
     EmployeeDB()
         .addEmployee(
       EmployeeModel(
         name: nameController.text,
         date: selectedDate!,
         status: status,
+        id: id,
       ),
     )
         .then(
@@ -68,5 +70,21 @@ class AddScreenController with ChangeNotifier {
       },
     );
     log('date formated');
+  }
+
+  String? nameValidation(String? value) {
+    if (value!.isEmpty) {
+      return 'Please enter your name';
+    } else {
+      return null;
+    }
+  }
+
+  String? dateValidations(String? value) {
+    if (value!.isEmpty) {
+      return 'Please select date';
+    } else {
+      return null;
+    }
   }
 }

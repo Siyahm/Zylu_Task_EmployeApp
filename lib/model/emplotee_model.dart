@@ -9,11 +9,14 @@ class EmployeeModel {
   final DateTime date;
   @HiveField(2)
   final Status? status;
+  @HiveField(3)
+  final String id;
 
   EmployeeModel({
     required this.name,
     required this.date,
     required this.status,
+    required this.id,
   });
 }
 

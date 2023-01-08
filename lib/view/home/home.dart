@@ -1,5 +1,6 @@
-import 'package:employee_app/controller/add_screen_controller.dart';
 import 'package:employee_app/controller/home_controller.dart';
+import 'package:employee_app/helpers/app_colors.dart';
+import 'package:employee_app/utils/alert_dialogue_widget.dart';
 import 'package:employee_app/view/add_screen/add_screen.dart';
 import 'package:employee_app/view/home/widgets/list_tile_widget.dart';
 import 'package:flutter/material.dart';
@@ -21,20 +22,41 @@ class HomeScreen extends StatelessWidget {
       appBar: AppBar(
         title: const Text('Employees'),
         centerTitle: true,
+        actions: [
+          TextButton(
+            onPressed: () {
+              AlertDialogWidget().alertBox(context, () {
+                homeController.deleteAllEmployees();
+                Navigator.pop(context);
+              });
+            },
+            child: const Text(
+              'Delete All',
+              style: TextStyle(
+                color: AppColors.whiteColor,
+              ),
+            ),
+          ),
+        ],
       ),
       body: Padding(
         padding: const EdgeInsets.all(10),
         child: Consumer<HomeController>(
-          builder: (context, value, child) => ListView.separated(
-            itemBuilder: (context, index) => ListTileWidget(
-              index: index,
-            ),
-            separatorBuilder: (context, index) => const Divider(
-              thickness: 2,
-              height: 2,
-            ),
-            itemCount: value.employeeList.length,
-          ),
+          builder: (context, value, child) =>
+              homeController.employeeList.isEmpty
+                  ? const Center(
+                      child: Text('No employee added'),
+                    )
+                  : ListView.separated(
+                      itemBuilder: (context, index) => ListTileWidget(
+                        index: index,
+                      ),
+                      separatorBuilder: (context, index) => const Divider(
+                        thickness: 2,
+                        height: 2,
+                      ),
+                      itemCount: value.employeeList.length,
+                    ),
         ),
       ),
       floatingActionButton: CircleAvatar(

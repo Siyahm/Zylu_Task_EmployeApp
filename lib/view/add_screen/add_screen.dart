@@ -31,6 +31,7 @@ class AddScreen extends StatelessWidget {
                   height: size.height * 0.03,
                 ),
                 TextFormFieldWidget(
+                  validation: (p0) => addScreenController.nameValidation(p0),
                   label: 'Full Name',
                   controller: addScreenController.nameController,
                 ),
@@ -41,6 +42,8 @@ class AddScreen extends StatelessWidget {
                   builder: (context, value, child) => Stack(
                     children: [
                       TextFormFieldWidget(
+                        validation: (p0) =>
+                            addScreenController.dateValidations(p0),
                         label: 'dd/mm/yy',
                         controller: value.dateController,
                         onTap: () async {
@@ -73,7 +76,9 @@ class AddScreen extends StatelessWidget {
                     minimumSize: Size(double.infinity, size.height * 0.06),
                   ),
                   onPressed: () {
-                    addScreenController.addEmployee(context);
+                    if (formKey.currentState!.validate()) {
+                      addScreenController.addEmployee(context);
+                    }
                   },
                   child: const Text('Add'),
                 ),

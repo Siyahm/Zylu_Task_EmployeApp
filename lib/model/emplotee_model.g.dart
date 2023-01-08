@@ -20,19 +20,22 @@ class EmployeeModelAdapter extends TypeAdapter<EmployeeModel> {
       name: fields[0] as String?,
       date: fields[1] as DateTime,
       status: fields[2] as Status?,
+      id: fields[3] as String,
     );
   }
 
   @override
   void write(BinaryWriter writer, EmployeeModel obj) {
     writer
-      ..writeByte(3)
+      ..writeByte(4)
       ..writeByte(0)
       ..write(obj.name)
       ..writeByte(1)
       ..write(obj.date)
       ..writeByte(2)
-      ..write(obj.status);
+      ..write(obj.status)
+      ..writeByte(3)
+      ..write(obj.id);
   }
 
   @override

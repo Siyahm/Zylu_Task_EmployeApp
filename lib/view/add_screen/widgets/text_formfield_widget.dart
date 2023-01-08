@@ -6,14 +6,17 @@ class TextFormFieldWidget extends StatelessWidget {
     Key? key,
     required this.label,
     required this.controller,
+    required this.validation,
     this.onTap,
   }) : super(key: key);
   final String label;
   final TextEditingController controller;
   final void Function()? onTap;
+  final String? Function(String?)? validation;
   @override
   Widget build(BuildContext context) {
     return TextFormField(
+      validator: validation,
       onTap: onTap,
       controller: controller,
       decoration: InputDecoration(

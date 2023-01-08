@@ -1,8 +1,7 @@
-import 'dart:developer';
-
 import 'package:employee_app/controller/home_controller.dart';
 import 'package:employee_app/helpers/app_colors.dart';
 import 'package:employee_app/model/emplotee_model.dart';
+import 'package:employee_app/utils/alert_dialogue_widget.dart';
 import 'package:flutter/material.dart';
 import 'package:intl/intl.dart';
 import 'package:provider/provider.dart';
@@ -18,15 +17,11 @@ class ListTileWidget extends StatelessWidget {
   Widget build(BuildContext context) {
     final homeController = Provider.of<HomeController>(context);
     homeController.checkExperience(index);
-    log('listTile building');
+    // log('listTile building');
 
     return ListTile(
       leading: CircleAvatar(
-        backgroundColor:
-            homeController.employeeList[index]!.status == Status.active &&
-                    homeController.experience!.inDays > 1825
-                ? AppColors.greenColor
-                : AppColors.blackColor,
+        backgroundColor: homeController.setActiveColor(index),
         radius: 25,
         child: CircleAvatar(
           backgroundColor: AppColors.whiteColor,
@@ -34,11 +29,8 @@ class ListTileWidget extends StatelessWidget {
           child: Text(
             (index + 1).toString(),
             style: TextStyle(
-                color: homeController.employeeList[index]!.status ==
-                            Status.active &&
-                        homeController.experience!.inDays > 1825
-                    ? AppColors.greenColor
-                    : AppColors.blackColor),
+              color: homeController.setActiveColor(index),
+            ),
           ),
         ),
       ),
@@ -47,10 +39,7 @@ class ListTileWidget extends StatelessWidget {
         style: TextStyle(
           fontWeight: FontWeight.bold,
           fontSize: 16,
-          color: homeController.employeeList[index]!.status == Status.active &&
-                  homeController.experience!.inDays > 1825
-              ? AppColors.greenColor
-              : AppColors.blackColor,
+          color: homeController.setActiveColor(index),
         ),
       ),
       subtitle: Row(
@@ -64,17 +53,19 @@ class ListTileWidget extends StatelessWidget {
                 ? 'Active'
                 : 'Inactive',
             style: TextStyle(
-                color: homeController.employeeList[index]!.status ==
-                            Status.active &&
-                        homeController.experience!.inDays > 1825
-                    ? AppColors.greenColor
-                    : AppColors.blackColor),
+              color: homeController.setActiveColor(index),
+            ),
           ),
         ],
       ),
       trailing: IconButton(
         icon: const Icon(Icons.delete),
-        onPressed: () {},
+        onPressed: () {
+          AlertDialogWidget().alertBox(context, () {
+            homeController.deletAnEmployee(index, context);
+            Navigator.pop(context);
+          });
+        },
       ),
     );
   }
